@@ -1,0 +1,38 @@
+#include <stdio.h>
+#include <string.h>
+
+#define MAX_LENGTH 500
+
+// Function to decode the ciphertext
+void decode(const char *ciphertext, const char *mapping, char *decoded) {
+    int i;
+    for (i = 0; ciphertext[i] != '\0'; i++) {
+        char ch = ciphertext[i];
+        if (ch >= '0' && ch <= '9') {
+            decoded[i] = mapping[ch - '0']; // Map digits
+        } else if (ch == ';') {
+            decoded[i] = ' '; // Map ';' to space
+        } else if (ch == ')') {
+            decoded[i] = '.'; // Map ')' to period
+        } else {
+            decoded[i] = ch; // Keep other characters as is
+        }
+    }
+    decoded[i] = '\0';
+}
+
+int main() {
+    const char ciphertext[MAX_LENGTH] = "531305))6:4826)41.)41);806*:48+860))85;;]8*;:*8+83 "
+                                        "(88)5*†;46(;88*96*2;8)*(;485);5*42:**(;4956*2(5*4)88* "
+                                        ";4069285);)6+8)411;1(19:48081;8:81+1;4885;4)485+528806*81 "
+                                        "(19;48;(88;4(1234:48)42;161;188;12;";
+    
+    // Define the substitution mapping (example: 0 -> 'A', 1 -> 'B', ...)
+    const char mapping[10] = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'};
+    
+    char decoded[MAX_LENGTH];
+    decode(ciphertext, mapping, decoded);
+    
+    printf("Decoded text: %s\n", decoded);
+    return 0;
+}
